@@ -1,0 +1,5 @@
+SELECT orders.id AS `Order ID`, orders.order_date AS `Order Date`, customers.name AS `Customer Name`, customers.phone AS `Customer Phone`, orders.total AS `Total` , group_concat(items.name separator ', ') AS `Items Bought` FROM orders 
+LEFT JOIN customers ON customers.id = orders.customer_id 
+LEFT JOIN order_details ON order_details.order_id = orders.id 
+LEFT JOIN items ON items.id = order_details.item_id 
+group by orders.id; 

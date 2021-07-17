@@ -1,0 +1,44 @@
+CREATE TABLE `items` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(50),
+  `price` int
+);
+
+CREATE TABLE `categories` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(50)
+);
+
+CREATE TABLE `item_categories` (
+  `item_id` int,
+  `category_id` int
+);
+
+CREATE TABLE `customers` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(80),
+  `phone` varchar(20) UNIQUE
+);
+
+CREATE TABLE `orders` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `order_date` date,
+  `total` int DEFAULT 0,
+  `customer_id` int NOT NULL
+);
+
+CREATE TABLE `order_details` (
+  `order_id` int NOT NULL,
+  `item_id` int NOT NULL,
+  `quantity` int DEFAULT 1
+);
+
+ALTER TABLE `item_categories` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`id`);
+
+ALTER TABLE `item_categories` ADD FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+
+ALTER TABLE `orders` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+
+ALTER TABLE `order_details` ADD FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
+
+ALTER TABLE `order_details` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`id`);
